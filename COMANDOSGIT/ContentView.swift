@@ -26,11 +26,43 @@ struct ContentView: View {
         NavigationView {
             List(commands) { command in
                 NavigationLink(destination: GitCommandDetailView(command: command)) {
-                    Text(command.name)
+                    HStack {
+                        Image(systemName: getIconName(for: command.name))
+                            .font(.title2)
+                            .foregroundColor(.blue)
+                            .frame(width: 30)
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(command.name)
+                                .font(.headline)
+                                .foregroundColor(.primary)
+                            Text(command.description)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                                .lineLimit(2)
+                        }
+                        .padding(.vertical, 8)
+                    }
                 }
             }
-            .navigationTitle("10 comandos GIT ")
+            .navigationTitle("Comandos Git Esenciales")
+            .listStyle(InsetGroupedListStyle())
+        }
+    }
     
+    private func getIconName(for command: String) -> String {
+        switch command {
+        case "git init": return "folder.badge.plus"
+        case "git clone": return "doc.on.doc"
+        case "git status": return "info.circle"
+        case "git add": return "plus.circle"
+        case "git commit": return "checkmark.circle"
+        case "git push": return "arrow.up.circle"
+        case "git pull": return "arrow.down.circle"
+        case "git branch": return "tree"
+        case "git merge": return "arrow.triangle.merge"
+        case "git log": return "clock"
+        default: return "terminal"
         }
     }
 }
